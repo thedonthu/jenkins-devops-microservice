@@ -8,6 +8,7 @@
 // 	}
 // }
 
+// Declerative style Pipeline
 
 pipeline {
 	// agent { docker { image 'maven:3.6.3' } }
@@ -20,7 +21,7 @@ pipeline {
 	}
 
 	stages {
-		stage ('Build') {
+		stage ('Checkout') {
 			steps {
 				echo "We are in Build step"
 				sh 'mvn --version'
@@ -28,6 +29,21 @@ pipeline {
 				echo "Path is : $PATH"
 				echo "Build Tag is : $env.BUILD_TAG"
 				echo "Build Url is : $env.BUILD_URL"
+			}
+		}
+		stage ('Compile') {
+			steps {
+				sh 'mvn clean compile'
+			}
+		}
+		stage ('Test') {
+			steps {
+				sh 'mvn test'
+			}
+		}
+		stage ('Integration Test') {
+			steps {
+				sh 'mvn failsafe:integration-test failsafe:verify'
 			}
 		}
 	} 
