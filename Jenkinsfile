@@ -32,7 +32,7 @@ pipeline {
 		success {
 			echo 'I run when you succeed'
 		}
-		failue {
+		failure {
 			echo 'I run when you fail'
 		}
 	}
